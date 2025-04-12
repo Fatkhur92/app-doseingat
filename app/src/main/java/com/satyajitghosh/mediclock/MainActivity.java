@@ -16,6 +16,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.satyajitghosh.mediclock.medicine.DisplayMedicineActivity;
 import com.satyajitghosh.mediclock.medicine.AlarmManagerHandler;
+import androidx.annotation.NonNull;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,22 +48,6 @@ public class MainActivity extends AppCompatActivity {
         registerAccountTextView = findViewById(R.id.register_account);
 
 
-
-//        testBtn.setOnClickListener(v -> {
-//            int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-//            int minute = Calendar.getInstance().get(Calendar.MINUTE) + 1;
-//
-//            AlarmManagerHandler.addAlert(
-//                    this,
-//                    hour,
-//                    minute,
-//                    "TEST MEDICINE",
-//                    12345, // ID tetap untuk testing
-//                    "after food"
-//            );
-//
-//            Toast.makeText(this, "Alarm dijadwalkan", Toast.LENGTH_SHORT).show();
-//        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,13 +91,63 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            Intent intent = new Intent(MainActivity.this, DisplayMedicineActivity.class);
-                            startActivity(intent);
-                            finish();
+                            // Check if it's time for post-test
+                            checkPostTestRequirement(user.getUid());
                         }
                     } else {
                         Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+    
+    private void checkPostTestRequirement(String userId) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+        
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Long registrationTimestamp = dataSnapshot.child("registrationDate").getValue(Long.class);
+                    Boolean hasCompletedPostTest = dataSnapshot.child("hasCompletedPostTest").getValue(Boolean.class);
+                    
+                    if (registrationTimestamp != null && (hasCompletedPostTest == null || !hasCompletedPostTest)) {
+                        long twoWeeksInMillis = 14 * 24 * 60 * 60 * 1000L; // 2 minggu dalam milidetik
+                        long currentTime = System.currentTimeMillis();
+                        
+                        if (currentTime - registrationTimestamp >= twoWeeksInMillis) {
+                            // Sudah 2 minggu, tampilkan post-test
+                            showPostTest();
+                        } else {
+                            // Belum 2 minggu, lanjut ke main activity
+                            proceedToMainApp();
+                        }
+                    } else {
+                        // Sudah menyelesaikan post-test atau data tidak valid
+                        proceedToMainApp();
+                    }
+                } else {
+                    // Data user tidak ditemukan
+                    proceedToMainApp();
+                }
+            }
+    
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Error handling
+                proceedToMainApp();
+            }
+        });
+    }
+    
+    private void showPostTest() {
+        Intent intent = new Intent(MainActivity.this, prostes.class);
+        startActivity(intent);
+        finish();
+    }
+    
+    private void proceedToMainApp() {
+        Intent intent = new Intent(MainActivity.this, DisplayMedicineActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

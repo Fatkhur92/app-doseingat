@@ -61,19 +61,22 @@ public class Registrasi extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Create a new user object with email
+                        // Create a new user object with email and registration date
                         Map<String, Object> user = new HashMap<>();
                         user.put("email", email);
-
-                        // Save user data to Firebase Realtime Database
-                        DatabaseReference userRef = mDatabase.getReference("user").push(); // Automatically generate a unique ID
+                        user.put("registrationDate", System.currentTimeMillis()); // Tambahkan timestamp registrasi
+                        user.put("hasCompletedPostTest", false); // Flag untuk menandai apakah sudah selesai post-test
+    
+                        // Get user ID from Firebase Auth
+                        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                        
+                        // Save user data to Firebase Realtime Database under users/{userId}
+                        DatabaseReference userRef = mDatabase.getReference("users").child(userId);
                         userRef.setValue(user).addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()) {
                                 Toast.makeText(Registrasi.this, "Registration and user data saved", Toast.LENGTH_SHORT).show();
-
-                                // Create an Intent to navigate to Data_Diri Activity
                                 Intent intent = new Intent(Registrasi.this, Data_Diri.class);
-                                startActivity(intent);  // Start the Data_Diri Activity
+                                startActivity(intent);
                             } else {
                                 Toast.makeText(Registrasi.this, "Failed to save user data: " + Objects.requireNonNull(task1.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -81,8 +84,7 @@ public class Registrasi extends AppCompatActivity {
                     } else {
                         Toast.makeText(Registrasi.this, "Registration failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
                 })
-        .addOnFailureListener(e -> Log.e("FirebaseAuth", "Error creating user", e));
+                .addOnFailureListener(e -> Log.e("FirebaseAuth", "Error creating user", e));
     }
 }
