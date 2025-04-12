@@ -8,55 +8,137 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Vibrator;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.satyajitghosh.mediclock.R;
 
-/**
- * This service is started by the broadcastReceiver. It it is used for showing the notifications and alarms .
- *
- * @author SATYAJIT GHOSH
- * @since 1.5.0
- */
 public class MyAlarmService extends Service {
 
+    private static final String TAG = "MyAlarmService";
     private Vibrator vibrator;
     private MediaPlayer mediaPlayer;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-        mediaPlayer.setLooping(true);
+        Log.d(TAG, "Service onCreate");
+        
+        // Initialize media player
+        initMediaPlayer();
+        
+        // Get vibrator service
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        
+        // Create notification channel
+        AlarmManagerHandler.createNotificationChannel(this);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String MedicineName = intent.getStringExtra("MedicineName");
-        String Food = intent.getStringExtra("Food");
+        Log.d(TAG, "Service onStartCommand");
+        
+        if (intent == null) {
+            Log.w(TAG, "Null intent received");
+            stopSelf();
+            return START_NOT_STICKY;
+        }
+
+        // Extract data from intent
+        String medicineName = intent.getStringExtra("MedicineName");
+        String food = intent.getStringExtra("Food");
         long time = intent.getLongExtra("time", 0);
         int notificationId = intent.getIntExtra("notificationId", 0);
-        AlarmManagerHandler.addAlert(getApplicationContext(), time, MedicineName, Food, notificationId); // It initiates the next alarm.
-        long[] pattern = {0, 100, 500};
-        vibrator.vibrate(pattern, 0);
 
-        mediaPlayer.start();
-        AlarmManagerHandler.createNotificationChannel(this);
-        showNotification(this, MedicineName, Food);
-        return Service.START_STICKY;
+        // Start foreground service with notification
+        startForeground(notificationId, buildNotification(medicineName, food));
+
+        // Play alarm sound and vibration
+        playAlarm();
+
+        // Schedule next alarm
+        AlarmManagerHandler.addAlert(getApplicationContext(), time, medicineName, food, notificationId);
+
+        return START_STICKY;
     }
 
+    private void initMediaPlayer() {
+        try {
+            mediaPlayer = MediaPlayer.create(this, R.raw.alarm);
+            mediaPlayer.setLooping(true);
+        } catch (Exception e) {
+            Log.e(TAG, "MediaPlayer initialization failed", e);
+        }
+    }
+
+    private void playAlarm() {
+        try {
+            if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+            }
+            
+            if (vibrator != null && vibrator.hasVibrator()) {
+                long[] pattern = {0, 100, 500};
+                vibrator.vibrate(pattern, 0);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to play alarm", e);
+        }
+    }
+
+    private Notification buildNotification(String medicineName, String food) {
+        // Create full screen intent
+        Intent fullScreenIntent = new Intent(this, RingActivity.class)
+                .putExtra("MedicineName", medicineName)
+                .putExtra("food", food);
+
+        PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(
+                this,
+                AlarmManagerHandler.setUniqueNotificationId(),
+                fullScreenIntent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        // Build notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("MediClock Reminder")
+                .setContentText("Hey, take your medicine " + medicineName + " " + food + ".")
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setAutoCancel(true);
+
+        // Add full screen intent for Android Q+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            builder.setFullScreenIntent(fullScreenPendingIntent, true);
+        }
+
+        return builder.build();
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mediaPlayer.stop();
-        vibrator.cancel();
+        Log.d(TAG, "Service onDestroy");
+        
+        // Release media player
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        
+        // Cancel vibration
+        if (vibrator != null) {
+            vibrator.cancel();
+        }
     }
 
     @Nullable
@@ -64,25 +146,4 @@ public class MyAlarmService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
-
-
-    public void showNotification(Context context, String MedicineName, String Food) {
-        Intent notificationIntent = new Intent(this, RingActivity.class).putExtra("MedicineName", MedicineName).putExtra("food", Food);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, AlarmManagerHandler.setUniqueNotificationId(), notificationIntent, 0);
-        Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("MediClock Reminder")
-                .setContentText("Hey, Take your medicine " + MedicineName + " " + Food + ".")
-                .setStyle(new NotificationCompat.BigTextStyle())
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_ALARM)
-                .setFullScreenIntent(pendingIntent, true)
-                .build();
-
-
-        // notificationId is a unique id for each notification
-        startForeground(AlarmManagerHandler.setUniqueNotificationId(), notification);
-    }
-
-
 }

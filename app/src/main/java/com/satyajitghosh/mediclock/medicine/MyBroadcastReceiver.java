@@ -11,7 +11,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        
         String MedicineName = intent.getStringExtra("MedicineName");
         String Food = intent.getStringExtra("Food");
         long time = intent.getLongExtra("time", 0);

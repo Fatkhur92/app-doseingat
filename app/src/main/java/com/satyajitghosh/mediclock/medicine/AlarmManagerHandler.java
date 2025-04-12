@@ -78,18 +78,25 @@ public class AlarmManagerHandler extends AppCompatActivity {
      */
     public static void addAlert(Context context, long time, String medicineName, String Food, int notificationId) {
         Calendar cal = Calendar.getInstance();
-        cal.getTimeInMillis();
+        cal.setTimeInMillis(time);
+        
+        // Perbaiki flag PendingIntent
         Intent intent = new Intent(context, MyBroadcastReceiver.class)
                 .putExtra("MedicineName", medicineName)
                 .putExtra("Food", Food)
                 .putExtra("time", time)
+                .putExtra("notificationId", notificationId)
                 .addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
+    
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context,
+                notificationId,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+    
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + AlarmManager.INTERVAL_DAY, pendingIntent);
-
-
     }
 
     /**

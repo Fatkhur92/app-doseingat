@@ -144,6 +144,7 @@ public class HomeActivity extends AppCompatActivity {
                             time
                     );
                     myRef.child("MedicineRecord").child(PersonID).child(mrh.getName() + AlarmManagerHandler.setUniqueNotificationId()).setValue(mrh); // It writes the new data to FireBase Database
+                    AlarmManagerHandler.initAlarm(mrh, HomeActivity.this);
                     Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(HomeActivity.this, DisplayMedicineActivity.class));
                 } else {

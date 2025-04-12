@@ -53,26 +53,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- Pastikan tidak ada aktivitas atau service lain yang bertentangan -->
-        <receiver
+       <receiver 
             android:name=".medicine.MyBroadcastReceiver"
             android:enabled="true"
-            android:exported="false">
+            android:exported="true">
+            
+            <!-- Untuk boot completed -->
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.example.ALARM_TRIGGER" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
         <receiver android:name=".CommonBroadCastReceiver" />
 
         <service
             android:name=".medicine.AlarmRefreshService"
-            android:enabled="true" />
+            android:enabled="true"
+             android:exported="true" />
         <service
             android:name=".medicine.MyAlarmService"
-            android:enabled="true"
-            android:exported="false"
-             />
+            android:exported="true"
+            android:foregroundServiceType="specialUse"
+            android:permission="android.permission.FOREGROUND_SERVICE">
+            <intent-filter>
+                <action android:name="com.satyajitghosh.mediclock.ACTION_START_ALARM" />
+            </intent-filter>
+        </service>
 
         <service
             android:name=".CommonAlarmRefreshService"
