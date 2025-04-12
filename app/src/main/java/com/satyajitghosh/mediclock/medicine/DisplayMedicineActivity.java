@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,24 +58,37 @@ public class DisplayMedicineActivity extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
         TextView account_user_name_view = findViewById(R.id.account_user_name_view);
-        FirebaseUser userdata = FirebaseAuth.getInstance().getCurrentUser();
-        if (userdata != null) {
-            String uid = userdata.getUid();
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("user_data").child(uid);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-            userRef.child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("user_data");
+            
+            // Query untuk mencari data user berdasarkan user_id
+            Query query = userDataRef.orderByChild("user_id").equalTo(uid);
+            
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        String name = snapshot.getValue(String.class);
-                        account_user_name_view.setText(String.format("Hi, %s", name));
-                    } else {
-                        account_user_name_view.setText("Hi, User");
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            // Ambil nama dari child "name"
+                            String name = snapshot.child("name").getValue(String.class);
+                            if (name != null && !name.isEmpty()) {
+                                account_user_name_view.setText(String.format("Hi, %s", name));
+                            } else {
+                                account_user_name_view.setText("Hi, User");
+                            }
+                            return; // Keluar setelah menemukan data pertama
+                        }
                     }
+                    account_user_name_view.setText("Hi, User");
                 }
+
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e("Firebase", "Error fetching username", error.toException());
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Error fetching user data", databaseError.toException());
+                    account_user_name_view.setText("Hi, User");
                 }
             });
         }

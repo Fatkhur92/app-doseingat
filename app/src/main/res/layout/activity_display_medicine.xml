@@ -102,7 +102,7 @@
             app:fabAlignmentMode="end"
             android:backgroundTint="@color/teal_700"
             app:hideOnScroll="true"
-            app:menu="@menu/nav_menu"
+           
             />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
