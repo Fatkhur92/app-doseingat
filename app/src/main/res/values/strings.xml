@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MediClock</string>
+    <string-array name="pendidikan_options">
+        <item>SD</item>
+        <item>SMP</item>
+        <item>SMA</item>
+        <item>Diploma</item>
+        <item>Sarjana</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Data_Diri">
+
+    <!-- Title TextView -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_primary_dark"
+        android:fontFamily="@font/robotobold"
+        android:padding="10dp"
+        android:text="Data Diri"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ScrollView -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Form content inside the ScrollView -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Nama -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Nama">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Usia -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/usia"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Usia">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Jenis Kelamin -->
+            <TextView
+                android:id="@+id/label_kelamin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Jenis Kelamin"
+                android:textSize="16sp"/>
+
+            <RadioGroup
+                android:id="@+id/kelamin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/radio_laki"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Laki-laki"/>
+                <RadioButton
+                    android:id="@+id/radio_perempuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Perempuan"/>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/label_durasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Lama Menderita"
+                android:textSize="16sp"/>
+
+            <RadioGroup
+                android:id="@+id/durasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/radio_hari"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kurang dari 6 Bulan"/>
+                <RadioButton
+                    android:id="@+id/radio_bulan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Lebih dari 6 Bulan"/>
+            </RadioGroup>
+
+            <!-- Pendidikan Terakhir -->
+            <TextView
+                android:id="@+id/label_pendidikan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Pendidikan Terakhir"
+                android:textSize="16sp"/>
+
+            <RadioGroup
+                android:id="@+id/pendidikan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/sd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SD"/>
+                <RadioButton
+                    android:id="@+id/smp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="SMP"/>
+                <RadioButton
+                    android:id="@+id/sma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="SMA"/>
+                <RadioButton
+                    android:id="@+id/sarjana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Sarjana"/>
+            </RadioGroup>
+
+            <!-- Status Pekerjaan -->
+            <TextView
+                android:id="@+id/label_status_pekerjaan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Status Pekerjaan"
+                android:textSize="16sp"/>
+
+            <RadioGroup
+                android:id="@+id/status_pekerjaan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/radio_bekerja"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bekerja"/>
+                <RadioButton
+                    android:id="@+id/radio_tidak_bekerja"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Tidak Bekerja"/>
+            </RadioGroup>
+
+            <!-- Tekanan Darah -->
+            <TextView
+                android:id="@+id/label_tekanan_darah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Tekanan Darah"
+                android:textSize="16sp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tekanan_darah"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Masukkan Tekanan Darah">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Nomor Telepon -->
+            <TextView
+                android:id="@+id/label_nomor_telepon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Nomor Telepon"
+                android:textSize="16sp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/notel"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Nomor Telepon">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/simpan_button"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Simpan"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/confirm_password_input_layout"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

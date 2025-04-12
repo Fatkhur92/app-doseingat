@@ -1,0 +1,161 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".medicine.UpdateActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/up_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="195dp"
+        android:hint="medicine name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/up_note"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:hint="Dosis (Waktu)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/up_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/up_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="216dp"
+        android:checkedButton="@+id/up_radio_button_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/up_note">
+
+        <RadioButton
+            android:id="@+id/up_radio_button_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Before Food" />
+
+        <RadioButton
+            android:id="@+id/up_radio_button_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="After Food" />
+
+    </RadioGroup>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/up_toggleButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/up_radioGroup">
+
+        <Button
+            android:id="@+id/up_morning"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:text="Morning" />
+
+        <Button
+            android:id="@+id/up_lunch"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:text="afternoon" />
+
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/up_toggleButton1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/up_radioGroup">
+
+
+        <Button
+            android:id="@+id/up_night"
+            style="?attr/materialButtonOutlinedStyle"
+            android:width="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Night" />
+
+
+        <Button
+            android:id="@+id/up_custom_time"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:text="Custom" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <Button
+        android:id="@+id/up_updatebtn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="48dp"
+        android:text="update"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/up_toggleButton" />
+
+    <Button
+        android:id="@+id/up_cancel"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="80dp"
+        android:text="cancel"
+        android:backgroundTint="#FF0000"
+        app:layout_constraintBottom_toBottomOf="@+id/up_updatebtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/up_updatebtn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:fontFamily="@font/robotobold"
+        android:paddingLeft="2dp"
+        android:paddingTop="60dp"
+        android:paddingBottom="10dp"
+        android:text="Update Medicine"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,217 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".medicine.HomeActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:hint="Nama Obat"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/note"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:hint="Komsumsi Perhari"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="58dp"
+        android:checkedButton="@+id/radio_button_1"
+        app:layout_constraintBottom_toTopOf="@+id/toggleButton1"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+        <RadioButton
+            android:id="@+id/radio_button_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Sebelum Makan" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Setelah Makan" />
+
+    </RadioGroup>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toggleButton1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/morning"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:text="Pagi" />
+
+        <Button
+            android:id="@+id/lunch"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:text="Siang" />
+
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButton1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/cancel_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+
+        <Button
+            android:id="@+id/night"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:text="Malam" />
+
+
+        <Button
+            android:id="@+id/custom_time"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="150dp"
+            android:text="Custom" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <Button
+        android:id="@+id/submitbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="17dp"
+        android:text="Tambahkan"
+        app:layout_constraintBaseline_toBaselineOf="@+id/cancel_btn"
+        app:layout_constraintEnd_toStartOf="@+id/cancel_btn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="203dp"
+        android:backgroundTint="#FF0000"
+        android:text="Batal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/submitbtn"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton1" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="414dp"
+        android:layout_height="87dp"
+        android:layout_marginBottom="74dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:fontFamily="sans-serif-black"
+        android:paddingLeft="2dp"
+        android:paddingTop="50dp"
+        android:paddingBottom="0dp"
+        android:text="Tambah Obat"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="55dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="59dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/ic_medicine_svgrepo_com" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="59dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="23dp"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintEnd_toStartOf="@+id/note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/ic_note_svgrepo_com" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.helper.widget.Layer
+        android:id="@+id/layer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="textView"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-31dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

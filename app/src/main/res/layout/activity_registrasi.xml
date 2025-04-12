@@ -1,0 +1,116 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/titel"
+    tools:context=".Registrasi">
+
+    <!-- Email EditText inside TextInputLayout -->
+    <LinearLayout
+        android:id="@+id/email_input_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:hintEnabled="true"
+        app:boxBackgroundMode="outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColorHint="@color/white"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="360dp">
+
+        <EditText
+            android:id="@+id/email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            android:drawableTint="@color/white"
+            android:foregroundTint="@color/white"
+            android:textColor="@color/white"
+            android:textColorHighlight="@color/white"
+            android:textColorHint="@color/white"/>
+    </LinearLayout>
+
+    <!-- Password EditText inside TextInputLayout -->
+    <LinearLayout
+        android:id="@+id/password_input_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:hintEnabled="true"
+        app:boxBackgroundMode="outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email_input_layout"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp">
+
+        <EditText
+            android:id="@+id/password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            android:drawableTint="@color/white"
+            android:foregroundTint="@color/white"
+            android:textColor="@color/white"
+            android:textColorHighlight="@color/white"
+            android:textColorHint="@color/white"/>
+    </LinearLayout>
+
+    <!-- Confirm Password EditText inside TextInputLayout -->
+    <LinearLayout
+        android:id="@+id/confirm_password_input_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:hintEnabled="true"
+        app:boxBackgroundMode="outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password_input_layout"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp">
+
+        <EditText
+            android:id="@+id/confirm_password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Konfirmasi Password"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            android:drawableTint="@color/white"
+            android:foregroundTint="@color/white"
+            android:textColor="@color/white"
+            android:textColorHighlight="@color/white"
+            android:textColorHint="@color/white"/>
+    </LinearLayout>
+
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/confirm_password_input_layout"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Already have an account Text -->
+    <TextView
+        android:id="@+id/already_have_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Login"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_button"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

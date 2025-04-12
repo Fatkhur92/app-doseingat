@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/mediclock_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/mediclock_icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MediClock"
+        tools:replace="android:allowBackup">
+        <activity
+            android:name=".prostes"
+            android:exported="false" />
+        <activity
+            android:name=".Edukasi"
+            android:exported="false" />
+        <activity
+            android:name=".medicine.UpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Registrasi"
+            android:exported="false" />
+        <activity
+            android:name=".medicine.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Data_Diri"
+            android:exported="false" />
+        <activity
+            android:name=".kuisioner"
+            android:exported="false" />
+        <activity
+            android:name=".medicine.DisplayMedicineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- Pastikan tidak ada aktivitas atau service lain yang bertentangan -->
+        <receiver
+            android:name=".medicine.MyBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".CommonBroadCastReceiver" />
+
+        <service
+            android:name=".medicine.AlarmRefreshService"
+            android:enabled="true" />
+        <service
+            android:name=".medicine.MyAlarmService"
+            android:enabled="true"
+            android:exported="false"
+             />
+
+        <service
+            android:name=".CommonAlarmRefreshService"
+            android:enabled="true"
+            android:exported="true" />
+
+
+    </application>
+
+</manifest>

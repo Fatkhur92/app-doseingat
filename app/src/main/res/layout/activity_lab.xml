@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/YellowAeroSpace"
+    tools:context=".lab.labActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/lab_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="130dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="40dp"
+            android:background="@color/white"
+            >
+
+
+        </ListView>
+
+
+
+        <ImageView
+            android:id="@+id/lab_empty"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentBottom="false"
+            android:foregroundGravity="center"
+            android:layout_marginTop="300dp"
+            android:clickable="false"
+            app:srcCompat="@drawable/ic_lab_svgrepo_com" />
+
+        <TextView
+            android:id="@+id/lab_emptyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="600dp"
+            android:fontFamily="@font/robotobold"
+            android:text="No Lab Tests"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+
+
+        <TextView
+            android:id="@+id/lab_account_user_name_view"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="13dp"
+            android:fontFamily="@font/pacificoregular"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@+id/lab_textView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lab_textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="85dp"
+            android:fontFamily="@font/robotobold"
+            android:text="Your Lab Tests"
+            android:textColor="@color/teal_700"
+            android:textSize="35sp"
+            app:layout_constraintBottom_toTopOf="@+id/lab_listview"
+            app:layout_constraintStart_toStartOf="@+id/lab_listview"
+            app:layout_constraintTop_toBottomOf="@+id/lab_account_user_name_view" />
+    </RelativeLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Note: A RecyclerView can also be used -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="100dp">
+
+            <!-- Scrollable content -->
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/lab_bottomAppBar"
+            style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            app:fabAlignmentMode="end"
+            android:backgroundTint="@color/teal_700"
+            app:hideOnScroll="true"
+            app:menu="@menu/lab_menu"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/lab_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFA000"
+            app:srcCompat="@drawable/ic_baseline_add_24"
+            app:layout_anchor="@id/lab_bottomAppBar"
+            />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</RelativeLayout>

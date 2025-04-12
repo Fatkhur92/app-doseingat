@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".lab.labAddActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:background="@color/YellowAeroSpace"
+        android:fontFamily="@font/robotobold"
+        android:paddingLeft="10dp"
+        android:paddingTop="60dp"
+        android:paddingBottom="10dp"
+        android:text="Add Lab Test"
+        android:textColor="@color/teal_700"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lab_doctor"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="224dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Doctor Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lab_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lab_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="224dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Test Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <AutoCompleteTextView
+            android:id="@+id/lab_name_edit"
+            android:padding="5dp"
+            android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="50dp"
+        android:layout_height="59dp"
+        android:layout_marginEnd="68dp"
+        app:layout_constraintBottom_toBottomOf="@+id/lab_date_view"
+        app:layout_constraintEnd_toStartOf="@+id/lab_date_view"
+        app:layout_constraintTop_toTopOf="@+id/lab_date_view"
+        app:srcCompat="@drawable/ic_calendar_svgrepo_com" />
+
+    <TextView
+        android:id="@+id/lab_date_view"
+        android:layout_width="157dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="92dp"
+        android:fontFamily="@font/acme"
+        android:text="Select Date"
+        android:onClick="showDatePickerDialog"
+        android:textColor="@color/teal_700"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lab_doctor" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="88dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/lab_name"
+        app:layout_constraintEnd_toStartOf="@+id/lab_name"
+        app:layout_constraintTop_toTopOf="@+id/lab_name"
+        app:srcCompat="@drawable/ic_lab_svgrepo_com" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="86dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/lab_doctor"
+        app:layout_constraintEnd_toStartOf="@+id/lab_doctor"
+        app:layout_constraintTop_toTopOf="@+id/lab_doctor"
+        app:srcCompat="@drawable/ic_doctor_svgrepo_com__1_" />
+
+    <Button
+        android:id="@+id/lab_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="128dp"
+        android:text="ADD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item android:id="@+id/nav_lab_medicine"
+        android:icon="@drawable/ic_medicine_svgrepo_com__1_"
+        app:showAsAction="ifRoom"
+        android:title="medicine" />
+
+    <item android:id="@+id/nav_lab_doc"
+        android:icon="@drawable/ic_doctor_svgrepo_com"
+        app:showAsAction="ifRoom"
+        android:title="lab_doc" />
+</menu>
