@@ -19,7 +19,6 @@ import androidx.core.app.NotificationCompat;
 import com.satyajitghosh.mediclock.R;
 
 public class MyAlarmService extends Service {
-
     private static final String TAG = "MyAlarmService";
     private Vibrator vibrator;
     private MediaPlayer mediaPlayer;
@@ -28,14 +27,8 @@ public class MyAlarmService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "Service onCreate");
-        
-        // Initialize media player
         initMediaPlayer();
-        
-        // Get vibrator service
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        
-        // Create notification channel
         AlarmManagerHandler.createNotificationChannel(this);
     }
 
@@ -51,6 +44,9 @@ public class MyAlarmService extends Service {
         long time = intent.getLongExtra("time", 0);
         int notificationId = intent.getIntExtra("notificationId", 0);
 
+        // Main change: Play alarm immediately when service starts
+        playAlarm();
+
         // Start foreground service with notification
         startForeground(notificationId, buildNotification(medicineName, food));
 
@@ -64,6 +60,7 @@ public class MyAlarmService extends Service {
         try {
             mediaPlayer = MediaPlayer.create(this, R.raw.alarm);
             mediaPlayer.setLooping(true);
+            mediaPlayer.setVolume(1.0f, 1.0f); // Set volume to max
         } catch (Exception e) {
             Log.e(TAG, "MediaPlayer initialization failed", e);
         }
@@ -85,7 +82,6 @@ public class MyAlarmService extends Service {
     }
 
     private Notification buildNotification(String medicineName, String food) {
-        // Create intent for RingActivity
         Intent ringIntent = new Intent(this, RingActivity.class)
                 .putExtra("MedicineName", medicineName)
                 .putExtra("food", food)
@@ -98,26 +94,26 @@ public class MyAlarmService extends Service {
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
         );
     
-        // Build notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("MediClock Reminder")
                 .setContentText("Hey, take your medicine " + medicineName + " " + food + ".")
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
-                .setFullScreenIntent(ringPendingIntent, true) // This will show RingActivity even on locked screen
+                .setFullScreenIntent(ringPendingIntent, true)
                 .setAutoCancel(true)
-                .setContentIntent(ringPendingIntent); // Regular tap action
+                .setContentIntent(ringPendingIntent);
     
         return builder.build();
-    }   
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "Service onDestroy");
-        
-        // Release media player
+        stopAlarm();
+    }
+
+    private void stopAlarm() {
         if (mediaPlayer != null) {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
@@ -126,7 +122,6 @@ public class MyAlarmService extends Service {
             mediaPlayer = null;
         }
         
-        // Cancel vibration
         if (vibrator != null) {
             vibrator.cancel();
         }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,17 +23,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.satyajitghosh.mediclock.R;
+import com.satyajitghosh.mediclock.medicine.AlarmManagerHandler;
+import com.satyajitghosh.mediclock.medicine.InputValidationHandler;
+import com.satyajitghosh.mediclock.medicine.MedicineRecordHandler;
+import com.satyajitghosh.mediclock.medicine.TIME;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * This Activity is used for Updating the existing data from FireBase
- *
- * @author SATYAJIT GHOSH
- * @since 1.0.0
- */
 public class UpdateActivity extends AppCompatActivity {
     MedicineRecordHandler oldRecord;
     private TextInputLayout name;
@@ -90,53 +89,79 @@ public class UpdateActivity extends AppCompatActivity {
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (oldRecord != null) {
                     AlarmManagerHandler.cancelAlarm(getApplicationContext(), oldRecord);
                 }
-
-                if (InputValidationHandler.inputValidation(getData().getName(), getData().getReminder())) {
-                    myRef.child(KEY).setValue(getData()); //Updates the data to the FireBase DataBase
-                    startActivity(
-                            new Intent(UpdateActivity.this, DisplayMedicineActivity.class)
-                                    .putExtra("UserName", user.getDisplayName()).putExtra("Id", user.getUid())
-                    );
+        
+                MedicineRecordHandler newData = getData();
+                if (InputValidationHandler.inputValidation(newData.getName(), newData.getReminder())) {
+                    myRef.child(KEY).setValue(newData) // Updates the data to FireBase
+                        .addOnSuccessListener(aVoid -> {
+                            // Set up new alarms after successful update
+                            AlarmManagerHandler.initAlarm(newData, getApplicationContext());
+                            
+                            startActivity(
+                                new Intent(UpdateActivity.this, DisplayMedicineActivity.class)
+                                    .putExtra("UserName", user.getDisplayName())
+                                    .putExtra("Id", user.getUid())
+                            );
+                        })
+                        .addOnFailureListener(e -> {
+                            // Handle update failure
+                            Toast.makeText(UpdateActivity.this, "Update failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
                 } else {
                     InputValidationHandler.showDialog(UpdateActivity.this);
                 }
-
-
             }
         });
 
         up_custom_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MaterialTimePicker picker;
-                if (up_custom_time.getText().toString().contains("Custom")) {
-
-                    picker =
-                            new MaterialTimePicker.Builder()
-                                    .setTimeFormat(TimeFormat.CLOCK_24H)
-                                    .setHour(0)
-                                    .setMinute(0)
-                                    .build();
-                } else {
-                    picker =
-                            new MaterialTimePicker.Builder()
-                                    .setTimeFormat(TimeFormat.CLOCK_24H)
-                                    .setHour(Integer.parseInt(up_custom_time.getText().toString().substring(0, 2)))
-                                    .setMinute(Integer.parseInt(up_custom_time.getText().toString().substring(3, 5)))
-                                    .build();
+                // Create final variables for hour and minute
+                final int[] initialHour = {0};
+                final int[] initialMinute = {0};
+                
+                // Parse current time if available
+                String currentTime = up_custom_time.getText().toString();
+                if (!currentTime.contains("Custom")) {
+                    try {
+                        String[] parts = currentTime.split(":");
+                        initialHour[0] = Integer.parseInt(parts[0]);
+                        initialMinute[0] = Integer.parseInt(parts[1]);
+                    } catch (Exception e) {
+                        // Use default values if parsing fails
+                        initialHour[0] = 0;
+                        initialMinute[0] = 0;
+                    }
                 }
-
-                picker.show(getSupportFragmentManager(), "tag");
-
+        
+                MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_24H)
+                    .setHour(initialHour[0])
+                    .setMinute(initialMinute[0])
+                    .setTitleText(currentTime.contains("Custom") ? "Select Alarm Time" : "Edit Alarm Time")
+                    .build();
+        
+                picker.show(getSupportFragmentManager(), "timePicker");
+                
                 picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        up_custom_time.setText(TimeChangeActivity.timeTextView(picker.getHour(), picker.getMinute()));
-                        custom_time_value = TimeChangeActivity.timeToString(picker.getHour(), picker.getMinute());
+                    public void onClick(View v) {
+                        // Get the selected hour and minute
+                        int hour = picker.getHour();
+                        int minute = picker.getMinute();
+                        
+                        // Format the time for display
+                        String formattedTime = String.format("%02d:%02d", hour, minute);
+                        up_custom_time.setText(formattedTime);
+                        
+                        // Store the time value in 24-hour format (e.g., "0830")
+                        custom_time_value = String.format("%02d%02d", hour, minute);
+                        
+                        // Auto-select the custom time button
+                        materialButtonToggleGroup1.check(R.id.up_custom_time);
                     }
                 });
             }
