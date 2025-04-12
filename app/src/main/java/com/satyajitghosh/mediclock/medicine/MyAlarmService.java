@@ -41,15 +41,11 @@ public class MyAlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "Service onStartCommand");
-        
         if (intent == null) {
-            Log.w(TAG, "Null intent received");
             stopSelf();
             return START_NOT_STICKY;
         }
 
-        // Extract data from intent
         String medicineName = intent.getStringExtra("MedicineName");
         String food = intent.getStringExtra("Food");
         long time = intent.getLongExtra("time", 0);
@@ -57,9 +53,6 @@ public class MyAlarmService extends Service {
 
         // Start foreground service with notification
         startForeground(notificationId, buildNotification(medicineName, food));
-
-        // Play alarm sound and vibration
-        playAlarm();
 
         // Schedule next alarm
         AlarmManagerHandler.addAlert(getApplicationContext(), time, medicineName, food, notificationId);
@@ -92,18 +85,19 @@ public class MyAlarmService extends Service {
     }
 
     private Notification buildNotification(String medicineName, String food) {
-        // Create full screen intent
-        Intent fullScreenIntent = new Intent(this, RingActivity.class)
+        // Create intent for RingActivity
+        Intent ringIntent = new Intent(this, RingActivity.class)
                 .putExtra("MedicineName", medicineName)
-                .putExtra("food", food);
-
-        PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(
+                .putExtra("food", food)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        
+        PendingIntent ringPendingIntent = PendingIntent.getActivity(
                 this,
                 AlarmManagerHandler.setUniqueNotificationId(),
-                fullScreenIntent,
+                ringIntent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
         );
-
+    
         // Build notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo)
@@ -111,15 +105,12 @@ public class MyAlarmService extends Service {
                 .setContentText("Hey, take your medicine " + medicineName + " " + food + ".")
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
-                .setAutoCancel(true);
-
-        // Add full screen intent for Android Q+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            builder.setFullScreenIntent(fullScreenPendingIntent, true);
-        }
-
+                .setFullScreenIntent(ringPendingIntent, true) // This will show RingActivity even on locked screen
+                .setAutoCancel(true)
+                .setContentIntent(ringPendingIntent); // Regular tap action
+    
         return builder.build();
-    }
+    }   
 
     @Override
     public void onDestroy() {
