@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BAKTI HITAM</string>
+    <string name="app_name">DoseIngat</string>
     <string-array name="pendidikan_options">
         <item>SD</item>
         <item>SMP</item>

@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.satyajitghosh.mediclock.medicine.DisplayMedicineActivity;
+import com.satyajitghosh.mediclock.Edukasi;
 import com.satyajitghosh.mediclock.medicine.AlarmManagerHandler;
 import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void proceedToMainApp() {
-        Intent intent = new Intent(MainActivity.this, DisplayMedicineActivity.class);
+        Intent intent = new Intent(MainActivity.this, Edukasi.class);
         startActivity(intent);
         finish();
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lemonGreen"
+    android:background="@color/teal_700"
     tools:context=".medicine.RingActivity">
 
     <Button
@@ -12,7 +12,7 @@
         android:layout_width="109dp"
         android:layout_height="53dp"
         android:layout_marginBottom="51dp"
-        android:text="DISMISS"
+        android:text="SUDAH"
         android:backgroundTint="#FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -29,7 +29,7 @@ public class RingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String Medicine = intent.getStringExtra("MedicineName");
         String food = intent.getStringExtra("food");
-        String text = "Take the doses of \n" + Medicine + " \n" + food;
+        String text = "Silahkan minum obat \n" + Medicine + " \n" + food;
         textView = findViewById(R.id.medicine_name_view);
         textView.setText(text);
 
