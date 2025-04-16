@@ -105,7 +105,21 @@
                 android:text="Lama Menderita"
                 android:textSize="16sp"/>
 
-            <RadioGroup
+                <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/durasi"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Contoh : Kurang dari 6 Bulan , 6 Bulan , dst">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- <RadioGroup
                 android:id="@+id/durasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:text="Lebih dari 6 Bulan"/>
-            </RadioGroup>
+            </RadioGroup> -->
 
             <!-- Pendidikan Terakhir -->
             <TextView
@@ -214,7 +228,10 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    
+                    android:inputType="number|text"
+                    android:digits="0123456789/"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Nomor Telepon -->

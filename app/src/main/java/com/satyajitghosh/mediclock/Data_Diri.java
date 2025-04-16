@@ -23,8 +23,8 @@ import java.util.Map;
 
 public class Data_Diri extends AppCompatActivity {
 
-    private TextInputLayout nameInput, usiaInput, tekananDarahInput, notelInput;
-    private RadioGroup kelaminRadioGroup, durasiRadioGroup, pendidikanRadioGroup, pekerjaanRadioGroup;
+    private TextInputLayout nameInput, usiaInput, tekananDarahInput, notelInput, durasiTextInput;
+    private RadioGroup kelaminRadioGroup, pendidikanRadioGroup, pekerjaanRadioGroup;
     private Button submitButton;
 
     private FirebaseDatabase mDatabase;
@@ -45,7 +45,7 @@ public class Data_Diri extends AppCompatActivity {
 
         // Initialize RadioGroups
         kelaminRadioGroup = findViewById(R.id.kelamin);
-        durasiRadioGroup = findViewById(R.id.durasi);
+        durasiTextInput = findViewById(R.id.durasi);
         pendidikanRadioGroup = findViewById(R.id.pendidikan);
         pekerjaanRadioGroup = findViewById(R.id.status_pekerjaan);
         submitButton = findViewById(R.id.simpan_button);
@@ -59,14 +59,12 @@ public class Data_Diri extends AppCompatActivity {
         String usia = usiaInput.getEditText().getText().toString().trim();
         String tekananDarah = tekananDarahInput.getEditText().getText().toString().trim();
         String notel = notelInput.getEditText().getText().toString().trim();
+        String durasi = durasiTextInput.getEditText().getText().toString().trim();
 
         // Get selected gender
         int selectedKelaminId = kelaminRadioGroup.getCheckedRadioButtonId();
         String kelamin = selectedKelaminId != -1 ? ((RadioButton) findViewById(selectedKelaminId)).getText().toString() : "";
 
-        // Get selected disease duration
-        int selectedDurasiId = durasiRadioGroup.getCheckedRadioButtonId();
-        String durasi = selectedDurasiId != -1 ? ((RadioButton) findViewById(selectedDurasiId)).getText().toString() : "";
 
         // Get selected education
         int selectedPendidikanId = pendidikanRadioGroup.getCheckedRadioButtonId();

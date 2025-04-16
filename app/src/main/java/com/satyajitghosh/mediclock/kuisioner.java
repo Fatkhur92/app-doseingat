@@ -6,11 +6,13 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.satyajitghosh.mediclock.MainActivity;
 
 public class kuisioner extends AppCompatActivity {
 
@@ -66,6 +68,8 @@ public class kuisioner extends AppCompatActivity {
         kuisionerRef.setValue(kuisionerData).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(kuisioner.this, "Kuisioner data saved successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(kuisioner.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(kuisioner.this, "Failed to save data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
