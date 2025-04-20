@@ -34,10 +34,13 @@ public class MyAlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent == null) {
+        if (intent == null || "DISMISS_ALARM".equals(intent.getAction())) {
+            stopAlarm();
+            stopForeground(true);
             stopSelf();
             return START_NOT_STICKY;
         }
+    
 
         String medicineName = intent.getStringExtra("MedicineName");
         String food = intent.getStringExtra("Food");
@@ -96,7 +99,7 @@ public class MyAlarmService extends Service {
     
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo)
-                .setContentTitle("MediClock Reminder")
+                .setContentTitle("DoseIngat Reminder")
                 .setContentText("Hey, take your medicine " + medicineName + " " + food + ".")
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
@@ -125,6 +128,7 @@ public class MyAlarmService extends Service {
         if (vibrator != null) {
             vibrator.cancel();
         }
+        sendBroadcast(new Intent("ALARM_DISMISSED"));
     }
 
     @Nullable
