@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -50,7 +51,7 @@ public class prostes extends AppCompatActivity {
         jawaban6 = findViewById(R.id.jawaban6);
         jawaban7 = findViewById(R.id.jawaban7);
         jawaban8 = findViewById(R.id.jawaban8);
-        jawaban8 = findViewById(R.id.jawaban9);
+        jawaban9 = findViewById(R.id.jawaban9);
         submitButton = findViewById(R.id.submitbtn);
     }
 
@@ -73,7 +74,7 @@ public class prostes extends AppCompatActivity {
                 !getSelectedAnswer(jawaban6).isEmpty() &&
                 !getSelectedAnswer(jawaban7).isEmpty() &&
                 !getSelectedAnswer(jawaban8).isEmpty()&&
-                !getSelectedAnswer(jawaban8).isEmpty();
+                !getSelectedAnswerText(jawaban9).isEmpty();
     }
 
     private String getSelectedAnswer(RadioGroup radioGroup) {
@@ -105,7 +106,7 @@ public class prostes extends AppCompatActivity {
             });
     }
 
-    private String getSelectedAnswer(TextInputLayout textInputLayout) {
+    private String getSelectedAnswerText(TextInputLayout textInputLayout) {
         return textInputLayout.getEditText().getText().toString().trim();
     }
 
@@ -119,7 +120,7 @@ public class prostes extends AppCompatActivity {
             getSelectedAnswer(jawaban6),
             getSelectedAnswer(jawaban7),
             getSelectedAnswer(jawaban8),
-            getSelectedAnswer(jawaban9),
+            getSelectedAnswerText(jawaban9),
             System.currentTimeMillis()
         );
     }
