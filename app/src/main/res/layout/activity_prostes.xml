@@ -283,6 +283,31 @@
                     android:text="Tidak" />
             </RadioGroup>
 
+            <TextView
+            android:id="@+id/label_jawaban9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Tekanan Darah"
+            android:textSize="16sp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/jawaban9"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="Masukkan Tekanan Darah (contoh: 120/80)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                
+                android:inputType="number|text"
+                android:digits="0123456789/"
+                />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
 
 

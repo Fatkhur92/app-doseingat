@@ -21,6 +21,7 @@ import java.util.Map;
 public class prostes extends AppCompatActivity {
 
     private RadioGroup jawaban1, jawaban2, jawaban3, jawaban4, jawaban5, jawaban6, jawaban7, jawaban8;
+    private TextInputLayout jawaban9;
     private Button submitButton;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
@@ -49,6 +50,7 @@ public class prostes extends AppCompatActivity {
         jawaban6 = findViewById(R.id.jawaban6);
         jawaban7 = findViewById(R.id.jawaban7);
         jawaban8 = findViewById(R.id.jawaban8);
+        jawaban8 = findViewById(R.id.jawaban9);
         submitButton = findViewById(R.id.submitbtn);
     }
 
@@ -70,6 +72,7 @@ public class prostes extends AppCompatActivity {
                 !getSelectedAnswer(jawaban5).isEmpty() &&
                 !getSelectedAnswer(jawaban6).isEmpty() &&
                 !getSelectedAnswer(jawaban7).isEmpty() &&
+                !getSelectedAnswer(jawaban8).isEmpty()&&
                 !getSelectedAnswer(jawaban8).isEmpty();
     }
 
@@ -102,6 +105,10 @@ public class prostes extends AppCompatActivity {
             });
     }
 
+    private String getSelectedAnswer(TextInputLayout textInputLayout) {
+        return textInputLayout.getEditText().getText().toString().trim();
+    }
+
     private PostTestData createPostTestData() {
         return new PostTestData(
             getSelectedAnswer(jawaban1),
@@ -112,6 +119,7 @@ public class prostes extends AppCompatActivity {
             getSelectedAnswer(jawaban6),
             getSelectedAnswer(jawaban7),
             getSelectedAnswer(jawaban8),
+            getSelectedAnswer(jawaban9),
             System.currentTimeMillis()
         );
     }
